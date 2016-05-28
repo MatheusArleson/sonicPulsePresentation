@@ -8,7 +8,7 @@
 	<h:head>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Graphs</title>
+		<title>SonicPulse</title>
 		
 		<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
 
@@ -71,19 +71,35 @@
 						autoUpdate="true" 
 						closable="true">
 			</p:messages>
-		
-			<div id="dataDiv" class="ui-fluid">
-		
+			
+			<div 	id="mainDiv"
+					class="ui-fluid">
+					
+				<p:panelGrid 	id="topPanel"
+								columns="2" 
+								columnClasses="ui-grid-col-4,ui-grid-col-8" 
+								layout="grid" 
+								styleClass="ui-panelgrid-blank">
+						
+					<p:fieldset legend="Input">
+						
+						<p:fieldset legend="Delimiters">
+							
+						</p:fieldset>
+						
+						<p:fieldset legend="Data">
+							
+						</p:fieldset>
+						
+					</p:fieldset>
+					
+					<p:fieldset legend="Graph">
+						<div id="cy" class="ui-fluid" style="border: solid 1px"/>
+					</p:fieldset>
+				
+				</p:panelGrid>
 			</div>
 			
-			<div id="controlsDiv" class="ui-fluid">
-			
-			</div>
-			
-		</h:form>
-		
-		<h:form id="graphCanvasForm">
-			<div id="cy" class="ui-fluid" style="border: solid 1px; height: 350px;"/>
 		</h:form>
 		
 		<h:form id="loadingDialogForm">
@@ -128,9 +144,8 @@
 		</h:form>
 		
 		<h:form id="tooltipsForm">
-			<h:panelGroup id="tpPanel">
 			
-				<p:tooltip id="tpDirect" for=":mainForm:checkDirectedGraph :mainForm:lblDirected" trackMouse="true" showDelay="850" value="Turn the Graph in [On] Directed \ [Off] Undirected."/>
+			<h:panelGroup id="tpPanel">
 				
 			</h:panelGroup>
 			
