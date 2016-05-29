@@ -32,8 +32,9 @@
 		<h:outputScript library="js" name="dagre.js"/>
 		<h:outputScript library="js" name="cytoscape-dagre.js"/>
 		<h:outputScript library="js" name="cytoscape_empty_render.js"/>
+		<h:outputScript library="js" name="roomDrawer.js"/>
 		
-		<!-- INITIALIZATION OF EMTY CONTAINER -->
+		<!-- INITIALIZATION OF EMPTY CONTAINER -->
 		<h:outputScript>
 			$( document ).ready(function() {
 				initCy();
@@ -75,29 +76,100 @@
 			<div 	id="mainDiv"
 					class="ui-fluid">
 					
-				<p:panelGrid 	id="topPanel"
+				<p:panelGrid 	id="topGrid"
 								columns="2" 
 								columnClasses="ui-grid-col-4,ui-grid-col-8" 
 								layout="grid" 
 								styleClass="ui-panelgrid-blank">
 						
-					<p:fieldset legend="Input" style="padding-bottom: 30%;">
+					<p:fieldset legend="Input">
 						
 						<p:fieldset legend="Delimiters">
-							
+							<p:panelGrid 	id="delimitersGrid"
+											columns="2" 
+											columnClasses="ui-grid-col-4,ui-grid-col-8" 
+											layout="grid" 
+											styleClass="ui-panelgrid-blank">
+								
+								<p:outputLabel 	value="Room Alias: "/>
+								<p:inputText 	id="delmiterRoomAlias"
+												label="Room alias delimiter"
+												value="#{mainPageBean.inputDelimiters.roomAliasDelimiter}"
+												required="true">
+								</p:inputText>
+								
+								<p:outputLabel 	value="Room Parameters: "/>
+								<p:inputText 	id="delmiterRoomParameters"
+												label="Room parameters delimiter"
+												value="#{mainPageBean.inputDelimiters.roomParametersDelimiter}"
+												required="true">
+								</p:inputText>
+								
+								<p:outputLabel value="Rooms: "/>
+								<p:inputText 	id="delmiterRooms"
+												label="Rooms delimiter"
+												value="#{mainPageBean.inputDelimiters.roomsDelimiter}"
+												required="false">
+								</p:inputText>
+								
+							</p:panelGrid>
 						</p:fieldset>
 						
-						<p:fieldset legend="Data">
-							
+						<p:spacer width="1px" height="10px"/>
+						
+						<p:fieldset legend="Data" styleClass="">
+							<p:panelGrid 	id="dataGrid"
+											columns="1" 
+											columnClasses="ui-grid-col-12" 
+											layout="grid" 
+											styleClass="ui-panelgrid-blank">
+											
+								<p:commandButton	id="uploadFileBtn"
+													value="Upload File"
+													actionListener="#{mainPageBean.clearUploadedFile()}"
+													process="@this"
+													update="@this"
+													onstart="showLoading();"
+													oncomplete="hideLoading();showFileUploadDialog();">
+								</p:commandButton>
+								
+								
+								<p:commandButton 	id="processBtn"
+													value="Process"
+													process="delmiterRoomAlias delmiterRoomParameters delmiterRooms roomsDataTa"
+													update=":mainForm">
+								</p:commandButton>
+								
+								<p:inputTextarea 	id="roomsDataTa"
+													label="Rooms data input area"
+													value="#{mainPageBean.inputDataStr}"
+													required="true"
+													autoResize="true">
+								</p:inputTextarea>
+											
+							</p:panelGrid>
 						</p:fieldset>
 						
 					</p:fieldset>
 					
-					<p:fieldset legend="Graph" style="padding-bottom: 30%;">
-						<div id="cy" class="ui-fluid" style="border: solid 1px;"/>
+					<p:fieldset legend="Graph">
+						<div id="cy" class="ui-fluid" style="border: solid 1px; height: 350px;"/>
 					</p:fieldset>
 				
 				</p:panelGrid>
+				
+				<p:panelGrid 	id="bottomGrid"
+								columns="1" 
+								columnClasses="ui-grid-col-12" 
+								layout="grid" 
+								styleClass="ui-panelgrid-blank">
+					
+					<p:fieldset legend="Rooms">
+						<div id="roomsDiv" class="ui-fluid" style="border: solid 1px; height: 350px;"/>
+					</p:fieldset>		
+					
+				</p:panelGrid>
+				
 			</div>
 			
 		</h:form>

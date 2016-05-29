@@ -35,6 +35,16 @@ public class StringUtil {
 	
 	//XXX SINGLE STRING METHODS
 	
+	public static String[] split(String delimiter, String str){
+		if(str == null || str.isEmpty()){
+			return null;
+		}
+		
+		String pattern = Pattern.compile(delimiter).toString();
+		String[] splitedArray = str.split(pattern);
+		return splitedArray;
+	} 
+	
 	public static boolean isNull(String str){
 		return str == null;
 	}

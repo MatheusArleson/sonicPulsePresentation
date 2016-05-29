@@ -2,38 +2,42 @@ package br.com.xavier.graphs.representation.model;
 
 public class Delimiters {
 
-	private String rowDelimiter;
-	private String rowElementsDelimiter;
-	private String representsEmpty;
-
-	public Delimiters(String rowDelimiter, String rowElementsDelimiter, String representsEmpty) {
+	//XXX PROPERTIES
+	private String roomAliasDelimiter;
+	private String roomParametersDelimiter;
+	private String roomsDelimiter;
+	
+	//XXX CONSTRUCTOR
+	public Delimiters(String roomAliasDelimiter, String roomParametersDelimiter, String roomsDelimiter) {
 		super();
-		this.rowDelimiter = rowDelimiter;
-		this.rowElementsDelimiter = rowElementsDelimiter;
-		this.representsEmpty = representsEmpty;
-	}
-
-	public String getRowDelimiter() {
-		return rowDelimiter;
-	}
-
-	public void setRowDelimiter(String rowDelimiter) {
-		this.rowDelimiter = rowDelimiter;
-	}
-
-	public String getRowElementsDelimiter() {
-		return rowElementsDelimiter;
-	}
-
-	public void setRowElementsDelimiter(String rowElementsDelimiter) {
-		this.rowElementsDelimiter = rowElementsDelimiter;
+		this.roomAliasDelimiter = roomAliasDelimiter;
+		this.roomParametersDelimiter = roomParametersDelimiter;
+		this.roomsDelimiter = roomsDelimiter;
 	}
 	
-	public String getRepresentsEmpty() {
-		return representsEmpty;
+	//XXX GETTERS/SETTERS
+	public String getRoomAliasDelimiter() {
+		return roomAliasDelimiter;
+	}
+
+	public void setRoomAliasDelimiter(String roomAliasDelimiter) {
+		this.roomAliasDelimiter = roomAliasDelimiter;
+	}
+
+	public String getRoomParametersDelimiter() {
+		return roomParametersDelimiter;
+	}
+
+	public void setRoomParametersDelimiter(String roomParametersDelimiter) {
+		this.roomParametersDelimiter = roomParametersDelimiter;
+	}
+
+	public String getRoomsDelimiter() {
+		return roomsDelimiter;
+	}
+
+	public void setRoomsDelimiter(String roomsDelimiter) {
+		this.roomsDelimiter = roomsDelimiter;
 	}
 	
-	public void setRepresentsEmpty(String representsEmpty) {
-		this.representsEmpty = representsEmpty;
-	}
 }
