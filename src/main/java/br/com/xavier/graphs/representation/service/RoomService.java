@@ -36,7 +36,11 @@ public class RoomService implements Serializable {
 		return room;
 	}
 	
-	public void checkRoomsIntersection(Set<Room> roomsSet) {
+	public void checkRoomsRectangleIntersection(Set<Room> roomsSet) {
+		if(roomsSet == null || roomsSet.isEmpty()){
+			throw new IllegalArgumentException("Empty rooms set");
+		}
+		
 		for (Room room : roomsSet) {
 			for (Room otherRoom : roomsSet) {
 				if(room.equals(otherRoom)){
@@ -45,6 +49,20 @@ public class RoomService implements Serializable {
 				
 				if(room.intersects(otherRoom)){
 					throw new IllegalArgumentException("Room intersection detectected between rooms :  " + room.getAlias() + " and " + otherRoom.getAlias());
+				}
+			}
+		}
+	}
+	
+	public void checkRoomsAliasIntersection(Set<Room> roomsSet) {
+		for (Room room : roomsSet) {
+			for (Room otherRoom : roomsSet) {
+				if(room.equals(otherRoom)){
+					continue;
+				}
+				
+				if(room.getAlias().equals(otherRoom.getAlias())){
+					throw new IllegalArgumentException("Room Alias intersection detectected :  " + room.getAlias());
 				}
 			}
 		}
@@ -128,4 +146,6 @@ public class RoomService implements Serializable {
 			.replace("width", String.valueOf(room.getWidth()));
 		return command;
 	}
+
+	
 }

@@ -47,7 +47,8 @@ public class MainService implements Serializable {
 		validateDelimitersInInput(inputDelimiters, inputDataStr);
 		
 		Set<Room> roomsSet = createRoomsSet(inputDelimiters, inputDataStr);
-		checkRoomsIntersection(roomsSet);
+		checkRoomsAliasIntersection(roomsSet);
+		checkRoomsRectangleIntersection(roomsSet);
 		
 		Map<Room, Set<Room>> adjacencyMap = createAdjacencyMap(roomsSet);
 		
@@ -84,8 +85,12 @@ public class MainService implements Serializable {
 		return roomsSet;
 	}
 	
-	private void checkRoomsIntersection(Set<Room> roomsSet) {
-		roomsSvc.checkRoomsIntersection(roomsSet);
+	private void checkRoomsAliasIntersection(Set<Room> roomsSet) {
+		roomsSvc.checkRoomsAliasIntersection(roomsSet);
+	}
+	
+	private void checkRoomsRectangleIntersection(Set<Room> roomsSet) {
+		roomsSvc.checkRoomsRectangleIntersection(roomsSet);
 	}
 	
 	private Map<Room, Set<Room>> createAdjacencyMap(Set<Room> roomsSet) {
