@@ -1,19 +1,18 @@
 package br.com.xavier.graphs.representation.model;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
+import br.com.xavier.graphs.abstractions.nodes.AbstractColoredNode;
 import br.com.xavier.graphs.interfaces.nodes.ColoredNode;
 
-public class Room implements ColoredNode, Serializable {
+public class Room extends AbstractColoredNode implements ColoredNode, Serializable {
 	
 	private static final long serialVersionUID = 8282034103902232581L;
 	
 	//XXX PROPERTTIES
-	private int xPosition;
-	private int yPosition;
-	private int width;
-	private int height;
+	private final Rectangle roomRectangle;
 	private String alias;
 	private Color color;
 	
@@ -25,10 +24,7 @@ public class Room implements ColoredNode, Serializable {
 	public Room(String alias, int xPosition, int yPosition, int width, int height, Color color) {
 		super();
 		this.alias = alias;
-		this.xPosition = xPosition;
-		this.yPosition = yPosition;
-		this.width = width;
-		this.height = height;
+		this.roomRectangle = new Rectangle(xPosition, yPosition, width, height);
 		this.color = color;
 	}
 	
@@ -48,11 +44,7 @@ public class Room implements ColoredNode, Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
-		result = prime * result + xPosition;
-		result = prime * result + yPosition;
-		result = prime * result + width;
-		result = prime * result + height;
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((roomRectangle == null) ? 0 : roomRectangle.hashCode());
 		return result;
 	}
 
@@ -63,11 +55,6 @@ public class Room implements ColoredNode, Serializable {
 		if (getClass() != obj.getClass()) { return false; }
 		
 		Room other = (Room) obj;
-		if (xPosition != other.xPosition){ return false; }
-		if (yPosition != other.yPosition) { return false; }
-		if (width != other.width) { return false; }
-		if (height != other.height) { return false; }
-		
 		if (alias == null) {
 			if (other.alias != null) { 
 				return false; 
@@ -76,29 +63,52 @@ public class Room implements ColoredNode, Serializable {
 			return false;
 		}
 		
-		if (color == null) {
-			if (other.color != null) { 
+		if (roomRectangle == null) {
+			if (other.roomRectangle != null) { 
 				return false; 
 			}
-		} else if (!color.equals(other.color)) {
+		} else if (!roomRectangle.equals(other.roomRectangle)) {
 			return false;
 		}
 		
 		return true;
 	}
-
+	
+	@Override
+	public String getLabel() {
+		return getAlias();
+	}
+	
 	@Override
 	public String toString() {
 		return "Room [" 
-			+ "alias=" + alias	
-			+ ", xPosition=" + xPosition 
-			+ ", yPosition=" + yPosition 
-			+ ", width=" + width 
-			+ ", height=" + height
+			+ "alias=" + alias
+			+ ", roomRectangle= " + roomRectangle
 			+ ", color=" + color 
 		+ "]";
 	}
 
+	//XXX METHODS
+	public boolean intersects(Room otherRoom){
+		return this.roomRectangle.intersects(otherRoom.roomRectangle);
+	}
+	
+	public Room getExpandedTop(){
+		return new Room(alias, getX(), getY(), getWidth(), getHeight()+1);
+	}
+	
+	public Room getExpandedBottom(){
+		return new Room(alias, getX(), getY()-1, getWidth(), getHeight());
+	}
+	
+	public Room getExpandedLeft(){
+		return new Room(alias, getX()-1, getY(), getWidth(), getHeight());
+	}
+	
+	public Room getExpandedRight(){
+		return new Room(alias, getX(), getY(), getWidth()+1, getHeight());
+	}
+	
 	//XXX GETTERS/SETTERS
 	public String getAlias() {
 		return alias;
@@ -108,36 +118,20 @@ public class Room implements ColoredNode, Serializable {
 		this.alias = alias;
 	}
 	
-	public int getxPosition() {
-		return xPosition;
+	public int getX() {
+		return new Integer(roomRectangle.x);
 	}
 
-	public void setxPosition(int xPosition) {
-		this.xPosition = xPosition;
-	}
-
-	public int getyPosition() {
-		return yPosition;
-	}
-
-	public void setyPosition(int yPosition) {
-		this.yPosition = yPosition;
+	public int getY() {
+		return new Integer(roomRectangle.y);
 	}
 
 	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
+		return new Integer(roomRectangle.width);
 	}
 
 	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
+		return new Integer(roomRectangle.height);
 	}
 
 }

@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import br.com.xavier.graphs.abstractions.AbstractGraph;
+import br.com.xavier.graphs.impl.edges.DefaultUnweightedEdge;
 import br.com.xavier.graphs.representation.model.Delimiters;
+import br.com.xavier.graphs.representation.model.Room;
 import br.com.xavier.graphs.representation.service.MainService;
 import br.com.xavier.graphs.representation.util.StringUtil;
 import br.com.xavier.jsf.JsfUtil;
@@ -23,7 +26,7 @@ public class MainPageBean {
 	private static final String WV_FILE_UPLOAD_DIALOG = "fileUploadDialog";
 	
 	@Autowired
-	private MainService mainServioe;
+	private MainService mainService;
 	
 	//XXX DELIMITERS PROPERTIES
 	private Delimiters inputDelimiters;
@@ -31,6 +34,9 @@ public class MainPageBean {
 	//XXX INPUT DATA PROPERTIES 
 	private String inputDataStr;
 	private UploadedFile uploadedFile;
+	
+	//XXX GRAPH PROPERTIES
+	AbstractGraph<Room, DefaultUnweightedEdge<Room>> graph;
 	
 	//XXX CONSTRUCTOR
 	public MainPageBean() {}
@@ -43,6 +49,7 @@ public class MainPageBean {
 	private void resetInternalData() {
 		this.inputDelimiters = new Delimiters(":", ",", "\n");
 		this.inputDataStr = new String();
+		this.graph = null;
 		clearUploadedFile();
 	}
 	
@@ -53,7 +60,7 @@ public class MainPageBean {
 	//XXX FILE UPLOAD METHODS
 	public void fileUploadListener(FileUploadEvent event){
 		this.uploadedFile = event.getFile();
-		String fileText = mainServioe.readFileToString(uploadedFile, Charset.defaultCharset());
+		String fileText = mainService.readFileToString(uploadedFile, Charset.defaultCharset());
 		
 		if(StringUtil.isNullOrEmpty(fileText)){
 			JsfUtil.addErrorMessage("Empty file content.");
@@ -67,12 +74,36 @@ public class MainPageBean {
 	}
 	
 	//XXX PROCESS METHODS
-	public void process(){
+	public void drawnInput(){
 		try{
-			mainServioe.process(inputDataStr, inputDelimiters);
+			String roomsDelimiter = inputDelimiters.getRoomsDelimiter();
+			if(roomsDelimiter == null || roomsDelimiter.isEmpty()){
+				inputDelimiters.setRoomsDelimiter("\n");
+			}
+			
+			graph = mainService.drawnElements(inputDataStr, inputDelimiters);
+			
 		} catch (Exception e){
 			JsfUtil.addErrorMessage(e.getMessage());
 		}
+	}
+	
+	public void applyColor(){
+		if(graph == null){
+			JsfUtil.addErrorMessage("Process some input first.");
+		}
+		
+		try{
+			
+			mainService.colorElements(graph);
+			
+		} catch (Exception e){
+			JsfUtil.addErrorMessage(e.getMessage());
+		}
+	}
+	
+	public boolean disableColor(){
+		return (graph == null);
 	}
 	
 	//XXX GETTERS/SETTERS

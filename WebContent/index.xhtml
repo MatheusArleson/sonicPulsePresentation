@@ -42,6 +42,7 @@
 			
 			$( window ).resize(function() {
 				redraw();
+				resizeCanvas();
 			});
 		
 			function showLoading(){
@@ -133,11 +134,23 @@
 													oncomplete="hideLoading();showFileUploadDialog();">
 								</p:commandButton>
 								
+								<p:commandButton 	id="drawnBtn"
+													value="Drawn"
+													actionListener="#{mainPageBean.drawnInput()}"
+													process="@this delmiterRoomAlias delmiterRoomParameters delmiterRooms roomsDataTa"
+													update=":mainForm"
+													onstart="showLoading();"
+													oncomplete="hideLoading();">
+								</p:commandButton>
 								
-								<p:commandButton 	id="processBtn"
-													value="Process"
-													process="delmiterRoomAlias delmiterRoomParameters delmiterRooms roomsDataTa"
-													update=":mainForm">
+								<p:commandButton 	id="colorBtn"
+													value="Color"
+													disabled="#{mainPageBean.disableColor()}"
+													actionListener="#{mainPageBean.applyColor()}"
+													process="@this"
+													update="@none"
+													onstart="showLoading();"
+													oncomplete="hideLoading();">
 								</p:commandButton>
 								
 								<p:inputTextarea 	id="roomsDataTa"
@@ -165,7 +178,9 @@
 								styleClass="ui-panelgrid-blank">
 					
 					<p:fieldset legend="Rooms">
-						<div id="roomsDiv" class="ui-fluid" style="border: solid 1px; height: 350px;"/>
+						<div id="roomsDiv" class="ui-fluid" style="border: solid 1px; height: 350px;">
+							<canvas id="roomsCanvas"/>
+						</div>
 					</p:fieldset>		
 					
 				</p:panelGrid>

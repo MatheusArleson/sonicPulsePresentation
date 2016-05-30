@@ -84,8 +84,17 @@ function findSalaById(idSala){
 	for (i = 0; i < salasCriadas.length; i++) { 
 		salaCriada = salasCriadas[i];
 		if(salaCriada.id == idSala){
-			break;
+			return salaCriada;
 		}
 	}
-	return salaCriada;
+	return null;
+}
+
+function resizeCanvas(){
+	var canvas = document.getElementById("roomsCanvas");
+	canvas.style.width='100%';
+	canvas.style.height='100%';
+	canvas.width  = canvas.offsetWidth;
+	canvas.height = canvas.offsetHeight;
+	salasCriadas = [];
 }

@@ -38,7 +38,10 @@ function initCy(){
 				'text-opacity': 0.5,
 				'text-valign': 'top',
 				'text-halign': 'center',
-				'background-color': '#000000'
+				'background-color': '#000000',
+				'border-color': '#000000',
+			    'border-width': 1,
+			    'border-opacity': 1
 		 	}
 		).selector('edge') .css(
 			{

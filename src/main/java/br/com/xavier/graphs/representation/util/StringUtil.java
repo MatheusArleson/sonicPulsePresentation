@@ -1,5 +1,6 @@
 package br.com.xavier.graphs.representation.util;
 
+import java.awt.Color;
 import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
@@ -15,6 +16,10 @@ public class StringUtil {
 		NullChecker.checkNullParameter(content, encoding);
 		
 		return new String(content, encoding);
+	}
+	
+	public static String getAsString(Color color){
+		return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
 	}
 	
 	public static int getMaximumNumber(String str, String delimiter){
@@ -40,7 +45,14 @@ public class StringUtil {
 			return null;
 		}
 		
-		String pattern = Pattern.compile(delimiter).toString();
+		String realDelimiter = null;
+		if(delimiter.equals("\n")){
+			realDelimiter = "\r\n";
+		} else {
+			realDelimiter = delimiter;
+		}
+		
+		String pattern = Pattern.compile(realDelimiter).toString();
 		String[] splitedArray = str.split(pattern);
 		return splitedArray;
 	} 

@@ -19,22 +19,22 @@ public class DelimitersService implements Serializable {
 			throw new IllegalArgumentException("Null delimiters obj.");
 		}
 		
-		if(delimiters.getRoomsDelimiter() == null){
-			delimiters.setRoomsDelimiter("\n");
-		}
-		
 		if(delimiters.getRoomAliasDelimiter() == null){
-			throw new IllegalArgumentException("Null Room alias delimiter");
+			throw new IllegalArgumentException("Empty Room alias delimiter");
 		}
 		
 		if(delimiters.getRoomParametersDelimiter() == null){
-			throw new IllegalArgumentException("Null Room parameter delimiter");
+			throw new IllegalArgumentException("Empty Room parameter delimiter");
+		}
+		
+		if(delimiters.getRoomsDelimiter() == null){
+			throw new IllegalArgumentException("Empty Rooms delimiter");
 		}
 	}
 	
 	public boolean stringHasAllDelimiters(Delimiters delimiters, String str){
 		if(str == null || str.isEmpty()){
-			throw new IllegalArgumentException("Null input");
+			throw new IllegalArgumentException("Empty input");
 		}
 		
 		int indexOfRoomAliasDel = str.indexOf(delimiters.getRoomAliasDelimiter());
