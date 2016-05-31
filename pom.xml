@@ -55,18 +55,21 @@
 	
 	<dependencies>
 		<!-- MY GRAPHS LIBRARY  -->
+		<!-- https://github.com/MatheusArleson/Graphs -->
 		<dependency>
 			<groupId>br.com.xavier</groupId>
   			<artifactId>Graphs</artifactId>
   			<version>1.7.5</version>
 		</dependency>
 		
+		<!-- https://github.com/MatheusArleson/GraphsCytoscapeParser -->
 		<dependency>
 			<groupId>br.com.xavier</groupId>
   			<artifactId>GraphsCytoscapeParser</artifactId>
   			<version>1.4.1</version>
 		</dependency>
 		
+		<!-- https://github.com/MatheusArleson/Matrix -->
 		<dependency>
   			<groupId>br.com.xavier</groupId>
 			<artifactId>Matrix</artifactId>

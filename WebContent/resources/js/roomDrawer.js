@@ -96,5 +96,9 @@ function resizeCanvas(){
 	canvas.style.height='100%';
 	canvas.width  = canvas.offsetWidth;
 	canvas.height = canvas.offsetHeight;
+	clearSalasCriadas();
+}
+
+function clearSalasCriadas(){
 	salasCriadas = [];
 }

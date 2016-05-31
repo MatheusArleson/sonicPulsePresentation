@@ -139,7 +139,7 @@
 													actionListener="#{mainPageBean.drawnInput()}"
 													process="@this delmiterRoomAlias delmiterRoomParameters delmiterRooms roomsDataTa"
 													update=":mainForm"
-													onstart="showLoading();"
+													onstart="showLoading();clearSalasCriadas();"
 													oncomplete="hideLoading();">
 								</p:commandButton>
 								
