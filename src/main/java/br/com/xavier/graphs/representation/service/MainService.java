@@ -1,10 +1,14 @@
 package br.com.xavier.graphs.representation.service;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,7 @@ public class MainService implements Serializable {
 	private static final String CYTOSCAPE_WIDGET_VAR = "cy";
 	private static final String COLOR_GRAPH_ROOM_NODE_SIGNATURE = CYTOSCAPE_WIDGET_VAR + ".$(\"#ID\").css({\"background-color\" : \"#COLOR\"});";
 	private static final String COLOR_ROOM_JS_SIGNATURE = "colorirSala(\"idSala\", \"#color\");";
+	private static final String SCAN_CYCLE_BASE_STR = "CYCLE #CYCLE_NUMBER# => #ROOMS_ALIASES# \n";
 	
 	//XXX INJECTED DEPENDENCIES
 	@Autowired
@@ -151,6 +156,65 @@ public class MainService implements Serializable {
 		String script = sb.toString();
 		System.out.println(script);
 		PrimefacesUtil.executeJavascript(script);
+	}
+	
+	//XXX SCAN CYCLES METHODS
+	public String getScanCycles(AbstractGraph<Room, DefaultUnweightedEdge<Room>> graph) {
+		Map<Color, Set<Room>> colorDegreeMap = getGraphColorDegreeMap(graph);
+		Map<Integer, String> cycleStringsMap = getCycleStringsMap(colorDegreeMap);
+		
+		StringBuffer sb = new StringBuffer();
+		for (Integer cycleMapKey : cycleStringsMap.keySet()) {
+			sb.append(cycleStringsMap.get(cycleMapKey));
+		}
+		
+		return sb.toString();
+	}
+
+	private Map<Color, Set<Room>> getGraphColorDegreeMap(AbstractGraph<Room, DefaultUnweightedEdge<Room>> graph) {
+		Map<Color, Set<Room>> roomColorMap = new LinkedHashMap<>();
+		for (Room room : graph.getAllNodes()) {
+			Color roomColor = room.getColor();
+			
+			if(!roomColorMap.containsKey(roomColor)){
+				roomColorMap.put(roomColor, new LinkedHashSet<>());
+			}
+			
+			roomColorMap.get(roomColor).add(room);
+		}
+		
+		return roomColorMap;
+	}
+
+	private Map<Integer, String> getCycleStringsMap(Map<Color, Set<Room>> colorDegreeMap) {
+		Map<Integer, String> cycleMap = new TreeMap<>();
+		
+		for (Color color : colorDegreeMap.keySet()) {
+			StringBuffer roomsSb = new StringBuffer();
+			Set<Room> roomsSet = colorDegreeMap.get(color);
+			
+			Iterator<Room> roomsIt = roomsSet.iterator();
+			while(roomsIt.hasNext()){
+				Room room = roomsIt.next();
+				roomsSb.append(room.getAlias());
+				
+				if(roomsIt.hasNext()){
+					roomsSb.append(", ");
+				}
+			}
+			
+			String cycleStr = SCAN_CYCLE_BASE_STR.replace("#ROOMS_ALIASES#", roomsSb.toString());
+			
+			int mapKey = roomsSet.size();
+			while(cycleMap.containsKey(mapKey)){
+				mapKey++;
+			}
+					
+			cycleStr = cycleStr.replace("#CYCLE_NUMBER#", String.valueOf(mapKey));
+			cycleMap.put(mapKey, cycleStr);
+		}
+		
+		return cycleMap;
 	}
 
 }

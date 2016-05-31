@@ -38,6 +38,9 @@ public class MainPageBean {
 	//XXX GRAPH PROPERTIES
 	AbstractGraph<Room, DefaultUnweightedEdge<Room>> graph;
 	
+	//XXX OUTPUT DATA PROPERTIES
+	private String scanCyclesStr;
+	
 	//XXX CONSTRUCTOR
 	public MainPageBean() {}
 	
@@ -49,6 +52,7 @@ public class MainPageBean {
 	private void resetInternalData() {
 		this.inputDelimiters = new Delimiters(":", ",", "\n");
 		this.inputDataStr = new String();
+		this.scanCyclesStr = new String();
 		this.graph = null;
 		clearUploadedFile();
 	}
@@ -76,6 +80,8 @@ public class MainPageBean {
 	//XXX PROCESS METHODS
 	public void drawnInput(){
 		try{
+			scanCyclesStr = null;
+			
 			String roomsDelimiter = inputDelimiters.getRoomsDelimiter();
 			if(roomsDelimiter == null || roomsDelimiter.isEmpty()){
 				inputDelimiters.setRoomsDelimiter("\n");
@@ -96,6 +102,7 @@ public class MainPageBean {
 		try{
 			
 			mainService.colorElements(graph);
+			scanCyclesStr = mainService.getScanCycles(graph);
 			
 		} catch (Exception e){
 			JsfUtil.addErrorMessage(e.getMessage());
@@ -129,6 +136,14 @@ public class MainPageBean {
 	
 	public void setUploadedFile(UploadedFile uploadedFile) {
 		this.uploadedFile = uploadedFile;
+	}
+	
+	public String getScanCyclesStr() {
+		return scanCyclesStr;
+	}
+	
+	public void setScanCyclesStr(String scanCyclesStr) {
+		this.scanCyclesStr = scanCyclesStr;
 	}
 	
 }

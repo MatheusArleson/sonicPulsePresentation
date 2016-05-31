@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>br.com.xavier</groupId>
   			<artifactId>Graphs</artifactId>
-  			<version>1.7.5</version>
+  			<version>1.7.6</version>
 		</dependency>
 		
 		<!-- https://github.com/MatheusArleson/GraphsCytoscapeParser -->

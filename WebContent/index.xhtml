@@ -25,6 +25,10 @@
 				background-color: #FFFFFF;
 			}
 			
+			.ui-state-disabled{
+				opacity: 1 !important;
+			}
+			
 		</style>
 		
 		<!-- GRAPH DRAWING LIB -->
@@ -148,7 +152,7 @@
 													disabled="#{mainPageBean.disableColor()}"
 													actionListener="#{mainPageBean.applyColor()}"
 													process="@this"
-													update="@none"
+													update="scanCyclesTa"
 													onstart="showLoading();"
 													oncomplete="hideLoading();">
 								</p:commandButton>
@@ -172,10 +176,20 @@
 				</p:panelGrid>
 				
 				<p:panelGrid 	id="bottomGrid"
-								columns="1" 
-								columnClasses="ui-grid-col-12" 
+								columns="2" 
+								columnClasses="ui-grid-col-4,ui-grid-col-8" 
 								layout="grid" 
 								styleClass="ui-panelgrid-blank">
+					
+					<p:fieldset legend="Result">
+						<p:inputTextarea 	id="scanCyclesTa"
+											label="Scan cycles"
+											value="#{mainPageBean.scanCyclesStr}"
+											required="false"
+											disabled="true" readonly="true"
+											autoResize="true">
+						</p:inputTextarea>
+					</p:fieldset>
 					
 					<p:fieldset legend="Rooms">
 						<div id="roomsDiv" class="ui-fluid" style="border: solid 1px; height: 350px;">
