@@ -201,25 +201,25 @@
 				
 			</div>
 			
-		</h:form>
-		
-		<h:form id="loadingDialogForm">
-			<p:dialog 	id="loadingDialog" widgetVar="loading" header="Loading..."
-						width="75px" height="30px" 
-						modal="true" responsive="true" position="center"
-						resizable="false" draggable="false"
-						minimizable="false" maximizable="false"
-						closable="false" closeOnEscape="false"
-						showEffect="clip" hideEffect="clip">
-				<h:panelGroup id="loadindPanel">
-					<div align="center">
-						<h:graphicImage library="images" name="loading.gif"/>
-					</div>
-				</h:panelGroup>
-			</p:dialog>
-		</h:form>
-		
-		<h:form id="fileDialogForm" enctype="multipart/form-data">
+	</h:form>
+
+	<h:form id="loadingDialogForm">
+		<p:dialog id="loadingDialog" widgetVar="loading" header="Loading..."
+			width="225px" height="230px" modal="true" responsive="true"
+			position="center" resizable="false" draggable="false"
+			minimizable="false" maximizable="false" closable="false"
+			closeOnEscape="false" showEffect="clip" hideEffect="clip">
+			<h:panelGroup id="loadindPanel">
+				<h:panelGrid columns="1">
+					<h:graphicImage library="images" name="xgh.jpg" />
+					<h:graphicImage library="images" name="loading.gif"
+						style="margin-left: 80px;" />
+				</h:panelGrid>
+			</h:panelGroup>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="fileDialogForm" enctype="multipart/form-data">
 			<p:dialog 	id="fileDialog" widgetVar="fileUploadDialog" header="Upload File"
 						modal="true" responsive="true" 
 						resizable="false" draggable="false"
